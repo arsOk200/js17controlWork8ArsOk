@@ -3,18 +3,16 @@ import {QuoteApi, QuoteMutation} from "../../type";
 import {useNavigate} from "react-router-dom";
 
 interface Props {
-  onSubmit:(quote:QuoteApi) => void;
-  editQuote?:QuoteApi;
+  onSubmit: (quote: QuoteApi) => void;
+  editQuote?: QuoteApi;
 }
 
-const Form:React.FC<Props> = ({onSubmit, editQuote}) => {
+const Form: React.FC<Props> = ({onSubmit, editQuote}) => {
 
-  const initialState = editQuote? {
+  const initialState = editQuote ? {
     ...editQuote,
-  }:{
-    author: '',
-    category: '',
-    text: '',
+  } : {
+    author: '', category: '', text: '',
   }
   const navigate = useNavigate();
   const [quote, setQuote] = useState<QuoteMutation>(initialState);
@@ -24,15 +22,14 @@ const Form:React.FC<Props> = ({onSubmit, editQuote}) => {
     setQuote(prev => ({...prev, [name]: value}));
   };
 
-  const onFormSubmit = (e:React.FormEvent) => {
+  const onFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     navigate('/');
     onSubmit(quote);
   };
 
-  return (
-    <form className='container mt-3 w-75' onSubmit={onFormSubmit}>
-      <h4>{editQuote? "Edit Quote": "Add new quote"}</h4>
+  return (<form className='container mt-3 w-75' onSubmit={onFormSubmit}>
+      <h4>{editQuote ? "Edit Quote" : "Add new quote"}</h4>
       <div className="form-group mb-4">
         <label htmlFor="category" className='me-3'>Category: </label>
         <select required name="category" id="category" value={quote.category} onChange={onQuoteChange}>
@@ -46,19 +43,20 @@ const Form:React.FC<Props> = ({onSubmit, editQuote}) => {
       </div>
       <div className="form-group">
         <label htmlFor="author">Author</label>
-        <input id='author' name='author' type="text" className="form-control" value={quote.author} onChange={onQuoteChange}/>
+        <input id='author' name='author' type="text" className="form-control" value={quote.author}
+               onChange={onQuoteChange}/>
       </div>
       <div className="form-group">
         <label htmlFor='text'>Text</label>
-        <textarea name="text" id="text" className='form-control' value={quote.text} onChange={onQuoteChange} style={{height:'200px', resize:'none'}}/>
+        <textarea name="text" id="text" className='form-control' value={quote.text} onChange={onQuoteChange}
+                  style={{height: '200px', resize: 'none'}}/>
       </div>
       <div className='d-flex gap-2'>
         <button type='submit' className="btn btn-primary mt-2">
           Save
         </button>
       </div>
-    </form>
-  );
+    </form>);
 };
 
 export default Form;

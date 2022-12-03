@@ -5,54 +5,46 @@ import axiosApi from "../../axiosApi";
 import {useLocation} from "react-router-dom";
 import Spinner from "../../Components/Spinner/Spinner";
 
-interface Props{
-  quotesList:Quote[];
-  loading:boolean;
+interface Props {
+  quotesList: Quote[];
+  loading: boolean;
 }
-const Home:React.FC<Props> = ({quotesList,loading}) => {
+
+const Home: React.FC<Props> = ({quotesList, loading}) => {
   const location = useLocation();
   let link = location.pathname.replace("/quotes/", '');
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const fetchQuotes = useCallback(async () => {
-  try {
+    try {
       const quotesResponse = await axiosApi.get<QuotesList>(`/quotes.json?orderBy="category"&equalTo="${link}"`);
-      const quotes = Object.keys(quotesResponse.data).map(key =>{
+      const quotes = Object.keys(quotesResponse.data).map(key => {
         const quote = quotesResponse.data[key];
         quote.id = key;
         return quote;
       });
       setQuotes(quotes);
-  } finally {
-  }
-},[]);
+    } finally {
+    }
+  }, []);
 
 
-useEffect(()=> {
-    if(location.pathname === '/quotes/star-wars' || location.pathname ==='/quotes/motivational' || location.pathname === '/quotes/humor' || location.pathname === '/quotes/saying' || location.pathname === '/quotes/famous-people' ) {
+  useEffect(() => {
+    if (location.pathname === '/quotes/star-wars' || location.pathname === '/quotes/motivational' || location.pathname === '/quotes/humor' || location.pathname === '/quotes/saying' || location.pathname === '/quotes/famous-people') {
       void fetchQuotes();
     }
-}, [fetchQuotes, location]);
+  }, [fetchQuotes, location]);
 
 
-
-  if(location.pathname === '/quotes/star-wars' || location.pathname ==='/quotes/motivational' || location.pathname === '/quotes/humor' || location.pathname === '/quotes/saying' || location.pathname === '/quotes/famous-people' ) {
-    return (
-      <div className='w-75'>
-        <h1>{link}</h1>
-        {loading ? <Spinner/>: (
-          <ItemsList quotes={quotes}/>
-        )}
-      </div>
-    );
+  if (location.pathname === '/quotes/star-wars' || location.pathname === '/quotes/motivational' || location.pathname === '/quotes/humor' || location.pathname === '/quotes/saying' || location.pathname === '/quotes/famous-people') {
+    return (<div className='w-75'>
+      <h1>{link}</h1>
+      {loading ? <Spinner/> : (<ItemsList quotes={quotes}/>)}
+    </div>);
   } else {
-    return (
-      <div className='w-75'>
-        <h1>All</h1>
-        {loading ? <Spinner/>: (
-          <ItemsList quotes={quotesList}/>
-        )}
-      </div>
-    )
+    return (<div className='w-75'>
+      <h1>All</h1>
+      {loading ? <Spinner/> : (<ItemsList quotes={quotesList}/>)}
+    </div>)
   }
 
 };

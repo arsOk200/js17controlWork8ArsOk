@@ -10,7 +10,6 @@ import Edit from "./Containers/Edit/Edit";
 import AddQuote from "./Containers/Add-Quote/Add-Quote";
 
 
-
 function App() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const location = useLocation();
@@ -19,7 +18,7 @@ function App() {
     try {
       setLoading(true)
       const quotesResponse = await axiosApi.get<QuotesList>(`/quotes.json`);
-      const quotes = Object.keys(quotesResponse.data).map(key =>{
+      const quotes = Object.keys(quotesResponse.data).map(key => {
         const quote = quotesResponse.data[key];
         quote.id = key;
         return quote;
@@ -28,53 +27,32 @@ function App() {
     } finally {
       setLoading(false)
     }
-  },[]);
-  useEffect(()=> {
-    if (location.pathname === '/'){
+  }, []);
+  useEffect(() => {
+    if (location.pathname === '/') {
       void fetchQuotes();
     }
   }, [fetchQuotes, location]);
 
+  return (<>
+    <header>
+      <NavBar/>
+    </header>
+    <main className='container d-flex'>
+      <Links/>
+      <Routes>
+        <Route path={'/'} element={(<Home quotesList={quotes} loading={loading}/>)}/>
+        <Route path={'/quotes/star-wars'} element={(<Home quotesList={quotes} loading={loading}/>)}/>
+        <Route path='/quotes/famous-people' element={(<Home quotesList={quotes} loading={loading}/>)}/>
+        <Route path='/quotes/humor' element={(<Home quotesList={quotes} loading={loading}/>)}/>
+        <Route path='/quotes/saying' element={(<Home quotesList={quotes} loading={loading}/>)}/>
+        <Route path='/quotes/motivational' element={(<Home quotesList={quotes} loading={loading}/>)}/>
+        <Route path='/add-quote' element={(<AddQuote/>)}/>
+        <Route path='/edit-quote/:id' element={(<Edit/>)}/>
+      </Routes>
+    </main>
 
-
-
-  return (
-    <>
-     <header>
-          <NavBar/>
-     </header>
-      <main className='container d-flex'>
-        <Links/>
-        <Routes>
-            <Route path={'/'} element={(
-              <Home  quotesList={quotes} loading={loading}/>
-            )}/>
-          <Route path={'/quotes/star-wars'} element={(
-            <Home quotesList={quotes} loading={loading} />
-          )}/>
-          <Route path='/quotes/famous-people' element={(
-            <Home  quotesList={quotes} loading={loading} />
-          )}/>
-          <Route path='/quotes/humor' element={(
-            <Home quotesList={quotes} loading={loading} />
-          )}/>
-          <Route path='/quotes/saying' element={(
-            <Home quotesList={quotes} loading={loading}/>
-          )}/>
-          <Route path='/quotes/motivational' element={(
-            <Home  quotesList={quotes} loading={loading}/>
-          )}/>
-          <Route path='/add-quote' element={(
-            <AddQuote/>
-          )}/>
-          <Route path='/edit-quote/:id' element={(
-            <Edit/>
-          )}/>
-        </Routes>
-      </main>
-
-    </>
-  );
+  </>);
 }
 
 export default App;

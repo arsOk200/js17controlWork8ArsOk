@@ -7,7 +7,7 @@ import axiosApi from "../../axiosApi";
 const AddQuote = () => {
   const navigate = useNavigate();
 
-  const createQuote = async (quote:QuoteApi)=> {
+  const createQuote = async (quote: QuoteApi) => {
     try {
       await axiosApi.post('/quotes.json', quote);
       navigate('/');
@@ -16,11 +16,9 @@ const AddQuote = () => {
 
     }
   }
-  return (
-    <>
-      <Form onSubmit={createQuote}/>
-    </>
-  );
+  return (<>
+    <Form onSubmit={createQuote}/>
+  </>);
 };
 
 export default AddQuote;

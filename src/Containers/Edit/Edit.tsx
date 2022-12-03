@@ -9,37 +9,33 @@ const Edit = () => {
   const navigate = useNavigate();
   const [quote, setQuote] = useState<QuoteApi | null>(null);
 
-  const fetchOneQuote = useCallback(async()=> {
+  const fetchOneQuote = useCallback(async () => {
     try {
-      const quoteResponse = await axiosApi.get<QuoteApi>('/quotes/'+id+'.json');
+      const quoteResponse = await axiosApi.get<QuoteApi>('/quotes/' + id + '.json');
       setQuote(quoteResponse.data);
     } finally {
 
     }
-  },[id] )
+  }, [id])
 
-      useEffect(()=>{
-      if(id) {
-        fetchOneQuote().catch(console.error);
-      }
-      },[fetchOneQuote]);
+  useEffect(() => {
+    if (id) {
+      fetchOneQuote().catch(console.error);
+    }
+  }, [fetchOneQuote]);
 
-  const updateQuote = async (quote:QuoteApi)=> {
+  const updateQuote = async (quote: QuoteApi) => {
     try {
-      await axiosApi.put('/quotes/'+id+'.json', quote);
+      await axiosApi.put('/quotes/' + id + '.json', quote);
       navigate('/')
-    }  finally {
+    } finally {
 
     }
   };
 
-  return (
-    <>
-      {quote && (
-        <Form onSubmit={updateQuote} editQuote={quote}/>
-      )}
-    </>
-  );
+  return (<>
+    {quote && (<Form onSubmit={updateQuote} editQuote={quote}/>)}
+  </>);
 };
 
 export default Edit;

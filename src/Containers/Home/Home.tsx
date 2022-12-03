@@ -33,6 +33,8 @@ useEffect(()=> {
     }
 }, [fetchQuotes, location]);
 
+
+
   if(location.pathname === '/quotes/star-wars' || location.pathname ==='/quotes/motivational' || location.pathname === '/quotes/humor' || location.pathname === '/quotes/saying' || location.pathname === '/quotes/famous-people' ) {
     return (
       <div className='w-75'>
@@ -47,7 +49,6 @@ useEffect(()=> {
       <div className='w-75'>
         <h1>All</h1>
         {loading ? <Spinner/>: (
-
           <ItemsList quotes={quotesList}/>
         )}
       </div>

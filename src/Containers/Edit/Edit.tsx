@@ -26,7 +26,7 @@ const Edit = () => {
 
   const updateQuote = async (quote:QuoteApi)=> {
     try {
-      await axiosApi.put('/quotes/'+'id'+'.json', quote);
+      await axiosApi.put('/quotes/'+id+'.json', quote);
       navigate('/')
     }  finally {
 

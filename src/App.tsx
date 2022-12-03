@@ -35,6 +35,9 @@ function App() {
     }
   }, [fetchQuotes, location]);
 
+
+
+
   return (
     <>
      <header>
@@ -47,13 +50,13 @@ function App() {
               <Home  quotesList={quotes} loading={loading}/>
             )}/>
           <Route path={'/quotes/star-wars'} element={(
-            <Home quotesList={quotes} loading={loading}/>
+            <Home quotesList={quotes} loading={loading} />
           )}/>
           <Route path='/quotes/famous-people' element={(
-            <Home  quotesList={quotes} loading={loading}/>
+            <Home  quotesList={quotes} loading={loading} />
           )}/>
           <Route path='/quotes/humor' element={(
-            <Home quotesList={quotes} loading={loading}/>
+            <Home quotesList={quotes} loading={loading} />
           )}/>
           <Route path='/quotes/saying' element={(
             <Home quotesList={quotes} loading={loading}/>

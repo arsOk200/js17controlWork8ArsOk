@@ -28,9 +28,7 @@ const Form:React.FC<Props> = ({onSubmit, editQuote}) => {
     e.preventDefault();
     navigate('/');
     onSubmit(quote);
-    console.log(quote);
   };
-
 
   return (
     <form className='container mt-3 w-75' onSubmit={onFormSubmit}>
@@ -40,7 +38,7 @@ const Form:React.FC<Props> = ({onSubmit, editQuote}) => {
         <select required name="category" id="category" value={quote.category} onChange={onQuoteChange}>
           <option disabled value=''>Select a category</option>
           <option>star-wars</option>
-          <option>famous people</option>
+          <option>famous-people</option>
           <option>humor</option>
           <option>saying</option>
           <option>motivational</option>
